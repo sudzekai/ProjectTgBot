@@ -99,15 +99,6 @@ namespace ProjectTgBot
                         (markup as InlineKeyboardMarkup)?.AddButton(button.Content);
                     }
                 }
-
-                else
-                {
-                    markup = new InlineKeyboardMarkup();
-                    foreach (ButtonInfo button in commandInfo.ButtonsInfo)
-                    {
-                        (markup as InlineKeyboardMarkup)?.AddButton(button.Content);
-                    }
-                }
                 await bot.SendMessage(message.Chat.Id, commandInfo.Message, replyMarkup: markup);
             }
             foreach (ButtonInfo button in commandInfo.ButtonsInfo)
