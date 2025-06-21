@@ -39,7 +39,6 @@ namespace ProjectTgBot
             AddButtonInfoIfNotEmpty(commandInfo, Button3Content.Text, Button3Answer.Text);
             AddButtonInfoIfNotEmpty(commandInfo, Button4Content.Text, Button4Answer.Text);
             AddButtonInfoIfNotEmpty(commandInfo, Button5Content.Text, Button5Answer.Text);
-            MessageBox.Show(commandInfo.ToString());
 
             try
             {
@@ -72,7 +71,7 @@ namespace ProjectTgBot
         private async Task GetMeBot()
         {
             var botinfo = await bot.GetMe();
-            MessageBox.Show($"{botinfo.Username}");
+            MessageBox.Show($"Бот запущен: @{botinfo.Username}");
         }
 
         private async Task Bot_OnMessage(Telegram.Bot.Types.Message message, Telegram.Bot.Types.Enums.UpdateType type)
@@ -128,8 +127,6 @@ namespace ProjectTgBot
                     "Reply" => ButtonType.Reply,
                     _ => ButtonType.Link
                 };
-                MessageBox.Show(buttonType.ToString());
-
             }
         }
 
