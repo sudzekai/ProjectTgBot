@@ -1,8 +1,7 @@
-﻿using System.Linq;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Shell;
 using Telegram.Bot;
+using Telegram.Bot.Types;
 using Telegram.Bot.Types.ReplyMarkups;
 
 namespace ProjectTgBot
@@ -11,7 +10,7 @@ namespace ProjectTgBot
     {
         TelegramBotClient bot;
         readonly CancellationTokenSource _cts = new();
-        private readonly ButtonType[] buttonTypes = new ButtonType[5];
+        ButtonType buttonType = ButtonType.Reply;
         CommandInfo commandInfo;
 
         public MainWindow()
@@ -26,15 +25,20 @@ namespace ProjectTgBot
             commandInfo = new CommandInfo
             {
                 Command = CommandTextBox.Text,
-                Message = MessageTextBox.Text
+                Message = MessageTextBox.Text,
+                ButtonType = buttonType
             };
 
-            AddButtonInfoIfNotEmpty(commandInfo, Button1Content.Text, buttonTypes[0], Button1Answer.Text);
-            AddButtonInfoIfNotEmpty(commandInfo, Button2Content.Text, buttonTypes[1], Button2Answer.Text);
-            AddButtonInfoIfNotEmpty(commandInfo, Button3Content.Text, buttonTypes[2], Button3Answer.Text);
-            AddButtonInfoIfNotEmpty(commandInfo, Button4Content.Text, buttonTypes[3], Button4Answer.Text);
-            AddButtonInfoIfNotEmpty(commandInfo, Button5Content.Text, buttonTypes[4], Button5Answer.Text);
+            var commands = new[]
+            {
+                 new BotCommand { Command = CommandTextBox.Text, Description = BotCommandDescriptionTextBox.Text },
+            };
 
+            AddButtonInfoIfNotEmpty(commandInfo, Button1Content.Text, Button1Answer.Text);
+            AddButtonInfoIfNotEmpty(commandInfo, Button2Content.Text, Button2Answer.Text);
+            AddButtonInfoIfNotEmpty(commandInfo, Button3Content.Text, Button3Answer.Text);
+            AddButtonInfoIfNotEmpty(commandInfo, Button4Content.Text, Button4Answer.Text);
+            AddButtonInfoIfNotEmpty(commandInfo, Button5Content.Text, Button5Answer.Text);
             MessageBox.Show(commandInfo.ToString());
 
             try
@@ -46,17 +50,53 @@ namespace ProjectTgBot
                 return;
             }
 
+            bot.SetMyCommands(commands);
+            GetMeBot();
             bot.OnMessage += Bot_OnMessage;
+            bot.OnUpdate += Bot_OnUpdate;
+        }
+
+        private async Task Bot_OnUpdate(Update update)
+        {
+            foreach (ButtonInfo button in commandInfo.ButtonsInfo)
+            {
+                if (update.CallbackQuery.Data.Equals(button.Content))
+                {
+                    await bot.SendMessage(update.CallbackQuery.Message.Chat.Id, button.AnswerOrLink);
+                    await bot.AnswerCallbackQuery(update.CallbackQuery.Id);
+                    return;
+                }
+            }
+        }
+
+        private async Task GetMeBot()
+        {
+            var botinfo = await bot.GetMe();
+            MessageBox.Show($"{botinfo.Username}");
         }
 
         private async Task Bot_OnMessage(Telegram.Bot.Types.Message message, Telegram.Bot.Types.Enums.UpdateType type)
         {
-            if (message.Text.Contains(commandInfo.Command))
+            if (message.Text.Equals(commandInfo.Command))
             {
-                ReplyKeyboardMarkup markup = new ReplyKeyboardMarkup();
-                foreach (ButtonInfo button in commandInfo.ButtonsInfo)
+                ReplyMarkup markup;
+
+                if (commandInfo.ButtonType.Equals(ButtonType.Reply))
                 {
-                    markup.AddButton(button.Content);
+                    markup = new ReplyKeyboardMarkup();
+                    foreach (ButtonInfo button in commandInfo.ButtonsInfo)
+                    {
+                        (markup as ReplyKeyboardMarkup)?.AddButton(button.Content);
+                    }
+                }
+
+                else
+                {
+                    markup = new InlineKeyboardMarkup();
+                    foreach (ButtonInfo button in commandInfo.ButtonsInfo)
+                    {
+                        (markup as InlineKeyboardMarkup)?.AddButton(button.Content);
+                    }
                 }
                 await bot.SendMessage(message.Chat.Id, commandInfo.Message, replyMarkup: markup);
             }
@@ -65,15 +105,16 @@ namespace ProjectTgBot
                 if (message.Text.Equals(button.Content))
                 {
                     await bot.SendMessage(message.Chat.Id, button.AnswerOrLink);
+                    return;
                 }
             }
         }
 
-        private void AddButtonInfoIfNotEmpty(CommandInfo commandInfo, string content, ButtonType type, string answer)
+        private void AddButtonInfoIfNotEmpty(CommandInfo commandInfo, string content, string answer)
         {
             if (!string.IsNullOrEmpty(content))
             {
-                commandInfo.ButtonsInfo.Add(new ButtonInfo(content, type, answer));
+                commandInfo.ButtonsInfo.Add(new ButtonInfo(content, answer));
             }
         }
 
@@ -81,21 +122,14 @@ namespace ProjectTgBot
         {
             if (e.OriginalSource is RadioButton radioButton && sender is StackPanel panel)
             {
-                var buttonType = radioButton.Content.ToString() switch
+                buttonType = radioButton.Content.ToString() switch
                 {
                     "Query" => ButtonType.Query,
                     "Reply" => ButtonType.Reply,
                     _ => ButtonType.Link
                 };
+                MessageBox.Show(buttonType.ToString());
 
-                if (panel.Name.Length > 0 && char.IsDigit(panel.Name.Last()))
-                {
-                    int index = panel.Name.Last() - '1';
-                    if (index >= 0 && index < buttonTypes.Length)
-                    {
-                        buttonTypes[index] = buttonType;
-                    }
-                }
             }
         }
 

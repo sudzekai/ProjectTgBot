@@ -11,10 +11,11 @@ namespace ProjectTgBot
         public string Command = "";
         public List<ButtonInfo> ButtonsInfo = [];
         public string Message = "";
+        public ButtonType ButtonType = ButtonType.Reply;
 
         public override string ToString()
         {
-            return $"command: {Command}, Buttons: {string.Join(", ", ButtonsInfo)}, \nMessage: {Message}";
+            return $"command: {Command},\nType:{ButtonType},\n Buttons: {string.Join(", ", ButtonsInfo)}, \nMessage: {Message}";
         }
     }
 }

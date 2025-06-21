@@ -9,19 +9,17 @@ namespace ProjectTgBot
     internal class ButtonInfo
     {
         public string Content = "";
-        public ButtonType Type = ButtonType.Reply;
         public string AnswerOrLink = "";
 
-        public ButtonInfo(string content, ButtonType type, string answerOrLink)
+        public ButtonInfo(string content, string answerOrLink)
         {
             Content = content;
-            Type = type;
             AnswerOrLink = answerOrLink;
         }
 
         public override string ToString()
         {
-            return $"\n(content: {Content}, type: {Type}, answer or link: {AnswerOrLink})";
+            return $"\n(content: {Content}, answer or link: {AnswerOrLink})";
         }
     }
 
