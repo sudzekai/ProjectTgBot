@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using ProjectTgBot.UI_Elements;
+using System.Windows;
 using System.Windows.Controls;
 using Telegram.Bot;
 using Telegram.Bot.Types;
@@ -16,6 +17,7 @@ namespace ProjectTgBot
         public MainWindow()
         {
             InitializeComponent();
+            botListElement.IsRunning = true;
             BotSettingsWindow.Visibility = Visibility.Collapsed;
             BotListStackPanel.Visibility = Visibility.Visible;
         }
@@ -97,6 +99,15 @@ namespace ProjectTgBot
                         (markup as InlineKeyboardMarkup)?.AddButton(button.Content);
                     }
                 }
+
+                else
+                {
+                    markup = new InlineKeyboardMarkup();
+                    foreach (ButtonInfo button in commandInfo.ButtonsInfo)
+                    {
+                        (markup as InlineKeyboardMarkup)?.AddButton(button.Content);
+                    }
+                }
                 await bot.SendMessage(message.Chat.Id, commandInfo.Message, replyMarkup: markup);
             }
             foreach (ButtonInfo button in commandInfo.ButtonsInfo)
@@ -140,6 +151,11 @@ namespace ProjectTgBot
         {
             BotSettingsWindow.Visibility = Visibility.Collapsed;
             BotListStackPanel.Visibility = Visibility.Visible;
+        }
+
+        private void botListElement_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            botListElement.IsRunning = !botListElement.IsRunning;
         }
     }
 }
