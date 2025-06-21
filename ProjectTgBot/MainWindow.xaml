@@ -4,32 +4,38 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProjectTgBot"
+        xmlns:ui="clr-namespace:ProjectTgBot.UI_Elements"
         mc:Ignorable="d"
-        xmlns:ui ="clr-namespace:ProjectTgBot.UI_Elements"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid Background="#2e2e2e">
+        Title="MainWindow" Height="600" Width="1000">
+
+    <Window.Resources>
+    </Window.Resources>
+
+    <Grid Background="#1A1A1A">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="120"/>
+            <ColumnDefinition Width="150"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="50"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-
-        <Border Grid.Column="0" Grid.Row="1" Background="#1e1e1e">
-            <StackPanel HorizontalAlignment="Left">
+        <!-- Side panel -->
+        <Border Grid.Column="0" Grid.Row="1" Background="#121212">
+            <StackPanel>
                 <StackPanel.Resources>
                     <Style TargetType="Button">
-                        <Setter Property="Height" Value="40"/>
-                        <Setter Property="Width" Value="120"/>
+                        <Setter Property="Height" Value="50"/>
+                        <Setter Property="Width" Value="140"/>
                         <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="FontWeight" Value="SemiBold"/>
                         <Setter Property="BorderThickness" Value="0"/>
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="Button">
-                                    <Border BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}">
+                                    <Border Background="{TemplateBinding Background}" Padding="10">
                                         <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                     </Border>
                                 </ControlTemplate>
@@ -37,259 +43,99 @@
                         </Setter>
                         <Style.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#2e2e2e"/>
+                                <Setter Property="Background" Value="#2A2A2A"/>
                             </Trigger>
-                            <EventTrigger RoutedEvent="Button.Click">
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <ColorAnimation Duration="0:0:0.15" To="#3e3e3e"
-                                                        Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)"
-                                                        AutoReverse="True"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </EventTrigger>
                         </Style.Triggers>
                     </Style>
-                    <Style TargetType="Path">
-                        <Setter Property="Stroke" Value="White"/>
-                        <Setter Property="StrokeThickness" Value="3"/>
-                        <Setter Property="Width" Value="40"/>
-                        <Setter Property="Height" Value="50"/>
-                        <Setter Property="Stretch" Value="Uniform"/>
-                        <Setter Property="StrokeEndLineCap" Value="Round"/>
-                        <Setter Property="StrokeStartLineCap" Value="Round"/>
-                    </Style>
                     <Style TargetType="TextBlock">
-                        <Setter Property="FontSize" Value="15"/>
-                        <Setter Property="Foreground" Value="White"/>
-                        <Setter Property="VerticalAlignment" Value="Center"/>
-                        <Setter Property="FontWeight" Value="Bold"/>
-                        <Setter Property="Margin" Value="5 0 0 0"/>
+                        <Setter Property="Foreground" Value="#DDDDDD"/>
+                        <Setter Property="FontSize" Value="16"/>
+                        <Setter Property="FontWeight" Value="SemiBold"/>
+                    </Style>
+                    <Style TargetType="Path">
+                        <Setter Property="Fill" Value="#CCCCCC"/>
+                        <Setter Property="Stretch" Value="Uniform"/>
+                        <Setter Property="Width" Value="20"/>
+                        <Setter Property="Height" Value="20"/>
+                        <Setter Property="Margin" Value="0 0 8 0"/>
                     </Style>
                 </StackPanel.Resources>
 
-                <Button HorizontalAlignment="Center" Name="BotListButton" Click="BotListButton_Click">
-                    <StackPanel Orientation="Horizontal"  Margin="5 0 0 0">
-                        <Path StrokeThickness="0" Fill="White" Data="M9,15a1,1,0,1,0,1,1A1,1,0,0,0,9,15ZM2,14a1,1,0,0,0-1,1v2a1,1,0,0,0,2,0V15A1,1,0,0,0,2,14Zm20,0a1,1,0,0,0-1,1v2a1,1,0,0,0,2,0V15A1,1,0,0,0,22,14ZM17,7H13V5.72A2,2,0,0,0,14,4a2,2,0,0,0-4,0,2,2,0,0,0,1,1.72V7H7a3,3,0,0,0-3,3v9a3,3,0,0,0,3,3H17a3,3,0,0,0,3-3V10A3,3,0,0,0,17,7ZM13.72,9l-.5,2H10.78l-.5-2ZM18,19a1,1,0,0,1-1,1H7a1,1,0,0,1-1-1V10A1,1,0,0,1,7,9H8.22L9,12.24A1,1,0,0,0,10,13h4a1,1,0,0,0,1-.76L15.78,9H17a1,1,0,0,1,1,1Zm-3-4a1,1,0,1,0,1,1A1,1,0,0,0,15,15Z"/>
-                        <TextBlock>Боты</TextBlock>
+                <Button Name="BotListButton" Click="BotListButton_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <Path Data="M9,15a1,1,0,1,0,1,1A1,1,0,0,0,9,15ZM2,14a1,1,0,0,0-1,1v2a1,1,0,0,0,2,0V15A1,1,0,0,0,2,14Zm20,0a1,1,0,0,0-1,1v2a1,1,0,0,0,2,0V15A1,1,0,0,0,22,14ZM17,7H13V5.72A2,2,0,0,0,14,4a2,2,0,0,0-4,0,2,2,0,0,0,1,1.72V7H7a3,3,0,0,0-3,3v9a3,3,0,0,0,3,3H17a3,3,0,0,0,3-3V10A3,3,0,0,0,17,7ZM13.72,9l-.5,2H10.78l-.5-2ZM18,19a1,1,0,0,1-1,1H7a1,1,0,0,1-1-1V10A1,1,0,0,1,7,9H8.22L9,12.24A1,1,0,0,0,10,13h4a1,1,0,0,0,1-.76L15.78,9H17a1,1,0,0,1,1,1Zm-3-4a1,1,0,1,0,1,1A1,1,0,0,0,15,15Z"/>
+                        <TextBlock Text="Боты"/>
                     </StackPanel>
                 </Button>
-                <Button HorizontalAlignment="Center">
-                    <StackPanel Orientation="Horizontal" Margin="5 0 0 0">
-                        <Path Data="M3.375 19.5h17.25m-17.25 0a1.125 1.125 0 0 1-1.125-1.125M3.375 19.5h7.5c.621 0 1.125-.504 1.125-1.125m-9.75 0V5.625m0 12.75v-1.5c0-.621.504-1.125 1.125-1.125m18.375 2.625V5.625m0 12.75c0 .621-.504 1.125-1.125 1.125m1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125m0 3.75h-7.5A1.125 1.125 0 0 1 12 18.375m9.75-12.75c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125m19.5 0v1.5c0 .621-.504 1.125-1.125 1.125M2.25 5.625v1.5c0 .621.504 1.125 1.125 1.125m0 0h17.25m-17.25 0h7.5c.621 0 1.125.504 1.125 1.125M3.375 8.25c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125m17.25-3.75h-7.5c-.621 0-1.125.504-1.125 1.125m8.625-1.125c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125m-17.25 0h7.5m-7.5 0c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125M12 10.875v-1.5m0 1.5c0 .621-.504 1.125-1.125 1.125M12 10.875c0 .621.504 1.125 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125M13.125 12h7.5m-7.5 0c-.621 0-1.125.504-1.125 1.125M20.625 12c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125m-17.25 0h7.5M12 14.625v-1.5m0 1.5c0 .621-.504 1.125-1.125 1.125M12 14.625c0 .621.504 1.125 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125m0 1.5v-1.5m0 0c0-.621.504-1.125 1.125-1.125m0 0h7.5"/>
-                        <TextBlock>Таблицы</TextBlock>
+
+                <Button>
+                    <StackPanel Orientation="Horizontal">
+                        <Path Stroke="#CCCCCC" Fill="Transparent" StrokeThickness="2"
+                              Data="M3.375 19.5h17.25m-17.25 0a1.125 1.125 0 0 1-1.125-1.125M3.375 19.5h7.5c.621 0 1.125-.504 1.125-1.125m-9.75 0V5.625m0 12.75v-1.5c0-.621.504-1.125 1.125-1.125m18.375 2.625V5.625m0 12.75c0 .621-.504 1.125-1.125 1.125m1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125m0 3.75h-7.5A1.125 1.125 0 0 1 12 18.375m9.75-12.75c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125m19.5 0v1.5c0 .621-.504 1.125-1.125 1.125M2.25 5.625v1.5c0 .621.504 1.125 1.125 1.125m0 0h17.25m-17.25 0h7.5c.621 0 1.125.504 1.125 1.125M3.375 8.25c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125m17.25-3.75h-7.5c-.621 0-1.125.504-1.125 1.125m8.625-1.125c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125m-17.25 0h7.5m-7.5 0c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125M12 10.875v-1.5m0 1.5c0 .621-.504 1.125-1.125 1.125M12 10.875c0 .621.504 1.125 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125M13.125 12h7.5m-7.5 0c-.621 0-1.125.504-1.125 1.125M20.625 12c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125m-17.25 0h7.5M12 14.625v-1.5m0 1.5c0 .621-.504 1.125-1.125 1.125M12 14.625c0 .621.504 1.125 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125m0 1.5v-1.5m0 0c0-.621.504-1.125 1.125-1.125m0 0h7.5"/>
+                        <TextBlock Text="Таблицы"/>
                     </StackPanel>
                 </Button>
             </StackPanel>
-
         </Border>
 
-        <!-- Logo -->
-        <Button Background="#1e1e1e">
-            <StackPanel>
-                <TextBlock Foreground="White" FontWeight="Bold" FontSize="18" VerticalAlignment="Center" Margin="5 0 0 0">BizBuddyBot</TextBlock>
+        <!-- Logo area -->
+        <Border Grid.Column="0" Grid.Row="0" Background="#1A1A1A" VerticalAlignment="Center">
+            <TextBlock Text="BizBuddyBot" FontSize="20" Foreground="#F1C40F" FontWeight="Bold" HorizontalAlignment="Center"/>
+        </Border>
+
+        <!-- Top bar -->
+        <Grid Grid.Column="1" Grid.Row="0" Background="#1A1A1A">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10">
+                <TextBlock Name="MainBodyNameTextBlock" Text="Боты" FontSize="20" Foreground="White" FontWeight="Bold"/>
             </StackPanel>
-        </Button>
-        
-        <!-- Title -->
-        <Grid Grid.Column="1" Grid.Row="0" Background="#1e1e1e">
-            <Grid.Resources>
-                <Style TargetType="Button">
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="Button">
-                                <Border Background="{TemplateBinding Background}" CornerRadius="8">
-                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </Border>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </Grid.Resources>
-            <StackPanel VerticalAlignment="Center" Margin="10 0 0 0">
-                <TextBlock Name="MainBodyNameTextBlock" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" Text="Боты" FontSize="18" FontWeight="DemiBold"></TextBlock>
-            </StackPanel>
-            <Button Name="AddNewElement" Width="100" Height="20" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5" Content="Добавить бота" Background="#c3b621" Foreground="White"/>
+            <Button Name="AddNewElement" Content="Добавить бота" Width="140" Height="30" HorizontalAlignment="Right" Margin="10" Background="#F1C40F" Foreground="Black" FontWeight="Bold"/>
         </Grid>
 
-        <!-- Main body / Bot list -->
-        <Grid Grid.Row="1" Grid.Column="1" Visibility="Collapsed"> 
-            <StackPanel Name="BotListStackPanel" Visibility="Visible">
-                <ui:BotListElement x:Name="botListElement" BotName="Bot1" MouseDown="Border_MouseDown" Margin="5"/>
+        <!-- Bot list -->
+        <ScrollViewer Grid.Row="1" Grid.Column="1" Padding="10">
+            <StackPanel Name="BotListStackPanel">
+                <ui:BotListElement x:Name="botListElement" BotName="Bot1" MouseDown="Border_MouseDown" Margin="0 0 0 10"/>
             </StackPanel>
-        </Grid>
+        </ScrollViewer>
 
-        <!-- Main body / Button create window -->
-        <Grid Grid.Column="2" Grid.Row="1" Background="Transparent" Visibility="Visible" Name="BotSettingsWindow">
-            <Grid.Resources>
-                <Style TargetType="TextBlock">
-                    <Setter Property="Foreground" Value="White"/>
-                </Style>
-                <Style TargetType="RadioButton">
-                    <Setter Property="Foreground" Value="White"/>
-                </Style>
-            </Grid.Resources>
-            <StackPanel  HorizontalAlignment="Left">
-                <StackPanel.Resources>
-                    <Style TargetType="TextBox">
-                        <Setter Property="Foreground" Value="White"/>
-                        <Setter Property="Background" Value="Transparent"/>
-                        <Setter Property="Margin" Value="0 0 0 5"/>
-                    </Style>
-                    <Style TargetType="Path">
-                        <Setter Property="Data">
-                            <Setter.Value>
-                                M15.33252,9.5A3.5001,3.5001,0,0,0,8.80127,7.75a1.00016,1.00016,0,0,0,1.73242,1A1.50266,1.50266,0,0,1,11.83252,8a1.5,1.5,0,1,1,0,3h-.00244a.94984.94984,0,0,0-.18927.0387,1.03181,1.03181,0,0,0-.19861.04065.98275.98275,0,0,0-.15552.10485,1.00813,1.00813,0,0,0-.162.10975,1.00464,1.00464,0,0,0-.11706.1737.97789.97789,0,0,0-.09668.14417,1.02252,1.02252,0,0,0-.04285.21191A.94847.94847,0,0,0,10.83252,12v1l.00232.01135.0011.49109a1.00016,1.00016,0,0,0,1,.99756h.00244a1.00006,1.00006,0,0,0,.99756-1.00244l-.00153-.66138A3.49363,3.49363,0,0,0,15.33252,9.5Zm-4.20264,6.79A1,1,0,0,0,11.82959,18a1.036,1.036,0,0,0,.71045-.29,1.01517,1.01517,0,0,0,0-1.41992A1.03425,1.03425,0,0,0,11.12988,16.29Z</Setter.Value>
-                        </Setter>
-                        <Setter Property="Stroke" Value="White"/>
-                        <Setter Property="StrokeThickness" Value="2"/>
-                        <Setter Property="StrokeEndLineCap" Value="Round"/>
-                        <Setter Property="StrokeStartLineCap" Value="Round"/>
-                        <Setter Property="Stretch" Value="Uniform"/>
-                        <Setter Property="Height" Value="20"/>
-                        <Setter Property="Width" Value="20"/>
-                        <Setter Property="Margin" Value="5 0 0 0"/>
-                        <Setter Property="ToolTipService.InitialShowDelay" Value="0"/>
-                    </Style>
-                </StackPanel.Resources>
+        <!-- Bot settings -->
+        <ScrollViewer Grid.Column="2" Grid.Row="1" Background="#1A1A1A" Name="BotSettingsWindow">
+            <StackPanel Margin="20" HorizontalAlignment="Left">
+                <TextBlock Text="Бот" FontWeight="Bold" Margin="0 0 0 10"/>
 
-                <TextBlock Text="Bot" FontWeight="Bold" Margin="0 0 0 5"/>
+                <TextBlock Text="Токен:"/>
+                <TextBox x:Name="TokenTextBox" Width="200" Style="{StaticResource DarkTextBox}" Margin="0,0,0,0" HorizontalAlignment="Left" ToolTip="Token это уникальный ключ, который используется для запуска Вашего бота. Чтобы его получить, напишите боту @BotFather"/>
+                <Button Name="RunBotButton" Content="Запустить бота" Margin="0 10 0 20" Background="#3498DB" Foreground="White" Padding="5 2" BorderThickness="0" Width="125" Click="RunBotButton_Click"/>
 
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="token:"/>
-                    <Path>
-                        <Path.ToolTip>
-                            <ToolTip Content="Token это уникальный ключ, который используется для запуска Вашего бота. Чтобы его получить, напишите боту @BotFather"/>
-                        </Path.ToolTip>
-                    </Path>
-                </StackPanel>
-                
-                <StackPanel Orientation="Horizontal">
-                    <TextBox Name="TokenTextBox" Width="100" HorizontalAlignment="Left"/>
-                    <Button Name="RunBotButton" Content="Run Bot" Margin="5 0 0 0" Click="RunBotButton_Click"/>
-                </StackPanel>
-                
-                
-                
-                
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="command/text:">
-                    </TextBlock>
-                    <Path>
-                        <Path.ToolTip>
-                            <ToolTip Content="Команда или текст, при написании которого, выполнятся условия ниже"/>
-                        </Path.ToolTip>
-                    </Path>
-                </StackPanel>
-                <TextBox Name="CommandTextBox" Width="100" HorizontalAlignment="Left"/>
+                <TextBlock Text="Команда:"/>
+                <TextBox Name="CommandTextBox" Width="200" Style="{StaticResource DarkTextBox}" Margin="0,0,0,0" HorizontalAlignment="Left" ToolTip="Команда или текст, при написании которого, выполнятся условия ниже"/>
 
-                
+                <TextBlock Text="Описание команды:" Margin="0 10 0 0"/>
+                <TextBox Name="BotCommandDescriptionTextBox" Width="200" Style="{StaticResource DarkTextBox}" Margin="0,0,0,0" HorizontalAlignment="Left" ToolTip="Краткое описание команды"/>
 
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Command description:"/>
-                    <Path>
-                        <Path.ToolTip>
-                            <ToolTip Content="Краткое описание команды"/>
-                        </Path.ToolTip>
-                    </Path>
-                </StackPanel>
-                
-                <TextBox Name="BotCommandDescriptionTextBox" Width="100" HorizontalAlignment="Left"/>
+                <TextBlock Text="Ответ бота:" Margin="0 10 0 0"/>
+                <TextBox Name="MessageTextBox" Width="200" Style="{StaticResource DarkTextBox}" Margin="0,0,0,0" HorizontalAlignment="Left" ToolTip="Сообщение, которое отправит бот, после получения команды"/>
 
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="answer message:"/>
-                    <Path>
-                        <Path.ToolTip>
-                            <ToolTip Content="Сообщение, которое отправит бот, после получения команды"/>
-                        </Path.ToolTip>
-                    </Path>
-                </StackPanel>
-                <TextBox Name="MessageTextBox" Width="100" HorizontalAlignment="Left"/>
+                <TextBlock Text="Кнопки" FontWeight="Bold" Margin="0 20 0 10"/>
+                <Button Name="AddNewTelegramBtnButton" Content="Добавить кнопку" Background="#2b2b2b" Width="200" HorizontalAlignment="Left" Margin="5" Click="AddNewTelegramBtnButton_Click" Padding="3"/>
 
-                <TextBlock Text="Buttons" FontWeight="Bold"/>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="type:" Margin="0 5 0 0"/>
-                    <Path>
-                       
-                        <Path.ToolTip>
-                            <ToolTip Content="Всего три типа: reply - кнопка, появляющаяся под строкой для сообщений, Link - кнопка под сообщением от бота, при нажатии на которую Вы переходите по ссылке и Query - кнопка под сообщением бота, при нажатии на которую можно выполнить какое-то действие"/>
-                        </Path.ToolTip>
-                    </Path>
-                </StackPanel>
-                
-                <StackPanel Margin=" 0 3 0 10" Name="ButtonType1" Orientation="Horizontal" RadioButton.Checked="ButtonType_Checked">
-                    <RadioButton Content="Reply" IsChecked="True"/>
-                    <RadioButton Content="Link"/>
-                    <RadioButton Content="Query"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <Border BorderThickness="1" BorderBrush="Black" Margin="2">
-
-                        <StackPanel Margin="5">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="button content:"/>
-                                <Path>
-                                    <Path.ToolTip>
-                                        <ToolTip Content="Надпись на кнопке"/>
-                                    </Path.ToolTip>
-                                </Path>
-                            </StackPanel>
-
-                            <TextBox Name="Button1Content"  Width="100"/>
-
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="answer:"/>
-                                <Path>
-                                    <Path.ToolTip>
-                                        <ToolTip Content="Сообщение-ответ от бота при нажатии на кнопку"/>
-                                    </Path.ToolTip>
-                                </Path>
-                            </StackPanel>
-                            <TextBox Name ="Button1Answer"  Width="100"/>
-                        </StackPanel>
-                    </Border>
-
-                    <Border BorderThickness="1" BorderBrush="Black" Margin="2">
-                        <StackPanel Margin="5">
-                            <TextBlock Text="button content:"/>
-                            <TextBox Name="Button2Content"  Width="100"/>
-
-                            <TextBlock Text="answer:"/>
-                            <TextBox Name ="Button2Answer"  Width="100"/>
-                        </StackPanel>
-                    </Border>
-                    <Border BorderThickness="1" BorderBrush="Black" Margin="2">
-                        <StackPanel Margin="5">
-                            <TextBlock Text="button content:"/>
-                            <TextBox Name="Button3Content"  Width="100"/>
-
-                            <TextBlock Text="answer:"/>
-                            <TextBox Name ="Button3Answer"  Width="100"/>
-                        </StackPanel>
-                    </Border>
-                    <Border BorderThickness="1" BorderBrush="Black" Margin="2">
-                        <StackPanel Margin="5">
-                            <TextBlock Text="button content:"/>
-                            <TextBox Name="Button4Content"  Width="100"/>
-
-                            <TextBlock Text="answer:"/>
-                            <TextBox Name ="Button4Answer"  Width="100"/>
-                        </StackPanel>
-                    </Border>
-                    <Border BorderThickness="1" BorderBrush="Black" Margin="2">
-                        <StackPanel Margin="5">
-                            <TextBlock Text="button content:"/>
-                            <TextBox Name="Button5Content"  Width="100"/>
-
-                            <TextBlock Text="answer:"/>
-                            <TextBox Name ="Button5Answer"  Width="100"/>
-                        </StackPanel>
-                    </Border>
+                <StackPanel Name="ButtonsType" Orientation="Horizontal" RadioButton.Checked="ButtonType_Checked">
+                    <StackPanel.Resources>
+                        <Style TargetType="RadioButton" BasedOn="{StaticResource {x:Type ToggleButton}}">
+                            <Setter Property="Background" Value="#2b2b2b"/>
+                        </Style>
+                    </StackPanel.Resources>
+                    <RadioButton IsChecked="True" Margin="0 0 10 0" Foreground="White" Content="Reply" ToolTip="Кнопка, появляющаяся под строкой для сообщений, при нажатии на которую, пользователь шлёт сообщение с её названием">
+                    </RadioButton>
+                    <RadioButton IsChecked="False" Margin="0 0 10 0" Foreground="White" Content="Inline" ToolTip="Кнопка, появляющаяся под сообщением бота, нажатие на которую может перевести на интернет ресурс или вызвать реакцию бота в виде ответа сообщением">
+                    </RadioButton>
 
                 </StackPanel>
+                <WrapPanel Name="ButtonsPanel" Margin="0 10 0 0" ItemWidth="200" ItemHeight="175"/>
+
+                <Button Name="AddNewCommand" Content="Сохранить изменения" Background="#2b2b2b" Width="200" HorizontalAlignment="Left" Margin="5" Click="AddNewCommand_Click"  Padding="3"/>
+
             </StackPanel>
-        </Grid>
-
-
+        </ScrollViewer>
     </Grid>
 </Window>

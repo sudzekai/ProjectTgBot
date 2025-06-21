@@ -15,15 +15,17 @@
 
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10,0,0,0" Grid.Column="0">
                 <TextBlock Text="{Binding BotName, RelativeSource={RelativeSource AncestorType=UserControl}}"
-           Foreground="White" 
-           FontSize="16" 
-           VerticalAlignment="Center">
+                           Foreground="White" 
+                           FontSize="16" 
+                           Margin="0"
+                           VerticalAlignment="Center">
                 </TextBlock>
 
                 <Border Name="StatusBackground" VerticalAlignment="Center" Margin="10 0 0 0" CornerRadius="7" Background="#2a1215">
-                    <TextBlock Name="BotStatusTextBlock" Text="{Binding BotStatus, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                    <TextBlock Name="BotStatusTextBlock" Text="{Binding BotStatus, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                Foreground="#d31b1b"
                                VerticalAlignment="Center" 
+                               Margin="0"
                                Padding="8 3 8 3"/>
                 </Border>
             </StackPanel>

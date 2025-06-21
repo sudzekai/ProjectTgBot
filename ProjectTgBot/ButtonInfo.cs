@@ -10,18 +10,20 @@ namespace ProjectTgBot
     {
         public string Content = "";
         public string AnswerOrLink = "";
+        public bool IsLink = false;
 
-        public ButtonInfo(string content, string answerOrLink)
+        public ButtonInfo(string content, string answerOrLink, bool isLink)
         {
             Content = content;
             AnswerOrLink = answerOrLink;
+            IsLink = isLink;
         }
 
         public override string ToString()
         {
-            return $"\n(content: {Content}, answer or link: {AnswerOrLink})";
+            return $"(content: {Content}, answer or link: {AnswerOrLink}, IsLink: {IsLink})";
         }
     }
 
-    enum ButtonType { Reply, Link, Query }
+    enum ButtonType { Reply, Inline }
 }
