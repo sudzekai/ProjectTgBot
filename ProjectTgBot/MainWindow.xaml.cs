@@ -11,7 +11,7 @@ namespace ProjectTgBot
     public partial class MainWindow : Window
     {
         TelegramBotClient bot;
-        readonly CancellationTokenSource _cts = new();
+        CancellationTokenSource _cts = new();
 
         List<CommandInfo> commandsInfo;
         List<FormInfo> formsInfo;
@@ -29,6 +29,11 @@ namespace ProjectTgBot
 
         private void RunBotButton_Click(object sender, RoutedEventArgs e)
         {
+            if (bot is not null)
+            {
+                _cts.Cancel();
+                _cts = new();
+            }
             chatInfos = new();
             commandsInfo = new();
             formsInfo = new();
@@ -50,7 +55,6 @@ namespace ProjectTgBot
                 formsInfo.Add(formInfo.FormInfo);
             }
 
-            MessageBox.Show(string.Join("\n\n", commandsInfo));
 
             try
             {
