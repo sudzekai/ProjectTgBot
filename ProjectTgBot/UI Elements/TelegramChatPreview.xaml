@@ -11,7 +11,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <StackPanel VerticalAlignment="Bottom">
-            <Border Background="White" CornerRadius="10" VerticalAlignment="Bottom" Margin="0 0 5 5" Width="auto" HorizontalAlignment="Right">
+            <Border Background="White" CornerRadius="10" VerticalAlignment="Bottom" Margin="0 0 5 5" Width="175" HorizontalAlignment="Right">
                 <StackPanel>
                     <Grid Background="Transparent">
                         <TextBlock Name="UserMessage" TextWrapping="Wrap" Text="Пример сообщения" Foreground="Black" Padding="8 5 30 5"/>
@@ -19,7 +19,7 @@
                     </Grid>
                 </StackPanel>
             </Border>
-            <Border Background="White" CornerRadius="10" VerticalAlignment="Bottom" Margin="5 0 0 2" Width="300" HorizontalAlignment="Left">
+            <Border Name="MessageFromBotBorder" Background="White" CornerRadius="10" VerticalAlignment="Bottom" Margin="5 0 0 2" Width="300" HorizontalAlignment="Left">
                 <StackPanel>
                     <Grid Background="Transparent">
                         <TextBlock Name="BotMessage" TextWrapping="Wrap" Text="Пример сообщения" Foreground="Black" Padding="8 5 5 5"/>

@@ -4,11 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ProjectTgBot.UI_Elements"
-             mc:Ignorable="d">
+             mc:Ignorable="d"
+             xmlns:ui="clr-namespace:ProjectTgBot.UI_Elements"
+             >
 
-    <Border Background="#121212" Margin="5" CornerRadius="15" Height="auto" Padding="20 20 10 20">
+    <Border Background="#121212" Margin="5" CornerRadius="15" Height="auto" Padding="20 20 20 20">
         <StackPanel Orientation="Horizontal">
-            <Grid >
+            <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="auto"/>
@@ -76,10 +78,13 @@ HorizontalAlignment="Left" Click="AddNewTelegramBtnButton_Click" Padding="3"/>
 
                 <Button Grid.Row="2" Name="CommitChanges" Content="Сохранить изменения" Background="#2b2b2b" Width="200" HorizontalAlignment="Right" Margin="0 10 10 0" Click="CommitChanges_Click"  Padding="3" VerticalAlignment="Bottom"/>
                 <Button Grid.Row="2" Name="DeleteCommand" Content="Удалить команду" Background="#2b2b2b" Width="200" HorizontalAlignment="Left" Margin="0 10 10 0" Click="DeleteCommand_Click"  Padding="3" VerticalAlignment="Bottom"/>
-                <Button Grid.Row="2" Name="ShowPreview" Content="Предпросмотр" Background="#2b2b2b" Width="200" HorizontalAlignment="Center" Margin="0 10 10 0" Click="ShowPreview_Click"  Padding="3" VerticalAlignment="Bottom"/>
+                <Button Grid.Row="2" Name="ShowPreview" Content="Обновить предпросмотр" Background="#2b2b2b" Width="200" HorizontalAlignment="Center" Margin="0 10 10 0" Click="ShowPreview_Click"  Padding="3" VerticalAlignment="Bottom"/>
             </Grid>
-            <Grid Name="PreviewPanel">
-                
+            <Grid>
+                <TextBlock Text="Предпросмотр:" Height="20" VerticalAlignment="Top"/>
+                <Grid Name="PreviewPanel" Margin="0 20 0 0">
+                    <ui:TelegramChatPreview/>
+                </Grid>
             </Grid>
         </StackPanel>
     </Border>

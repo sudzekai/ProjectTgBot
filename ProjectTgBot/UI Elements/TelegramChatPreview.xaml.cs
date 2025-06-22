@@ -22,6 +22,11 @@ namespace ProjectTgBot.UI_Elements
     public partial class TelegramChatPreview : UserControl
     {
         public int Columns { get; set; } = 0;
+        public TelegramChatPreview()
+        {
+            InitializeComponent();
+            MessageFromBotBorder.Width = 175;
+        }
         public TelegramChatPreview(List<string> buttons, string message, string messageFromUser, ButtonType type = 0)
         {
             InitializeComponent();
