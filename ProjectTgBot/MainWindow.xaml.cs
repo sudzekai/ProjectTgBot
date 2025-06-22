@@ -333,5 +333,12 @@ namespace ProjectTgBot
         {
             FormsPanel.Children.Add(new FormInfoPanel());
         }
+
+        private void TableWindowButton_Click(object sender, RoutedEventArgs e)
+        {
+            Table TableWindow = new();
+
+            TableWindow.Show();
+        }
     }
 }
