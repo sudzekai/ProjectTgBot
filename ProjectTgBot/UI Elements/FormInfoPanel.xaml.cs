@@ -51,7 +51,7 @@ namespace ProjectTgBot.UI_Elements
                 FormInfo.StepsInfo.Add(stepInfoPanel.StepInfo);
             }
             FormInfo.FormName = FormNameTextBox.Text;
-            FormInfo.StartMessage = MessageTextBox.Text;
+            //FormInfo.StartMessage = MessageTextBox.Text;
             MessageBox.Show($"{FormInfo.ToString()}\n\n\n{FormInfo.StepsInfo.Count}");
         }
     }

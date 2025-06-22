@@ -16,6 +16,7 @@ namespace ProjectTgBot
         List<CommandInfo> commandsInfo;
         List<FormInfo> formsInfo;
         List<ChatInfo> chatInfos;
+        List<FormAnswers> formAnswers;
 
         BotListElement activeBot = new();
 
@@ -30,6 +31,7 @@ namespace ProjectTgBot
             chatInfos = new();
             commandsInfo = new();
             formsInfo = new();
+            formAnswers = new();
             List<BotCommand> commands = [];
             foreach (CommandInfoPanel telegramCommand in CommandsPanel.Children)
             {
@@ -118,7 +120,7 @@ namespace ProjectTgBot
                 {
                     return;
                 }
-                await bot.SendMessage(update.CallbackQuery.Message.Chat.Id, formInfo.StartMessage, parseMode: Telegram.Bot.Types.Enums.ParseMode.MarkdownV2);
+                await bot.SendMessage(update.CallbackQuery.Message.Chat.Id, formInfo.StepsInfo[0].BotMessage, parseMode: Telegram.Bot.Types.Enums.ParseMode.MarkdownV2);
                 await bot.AnswerCallbackQuery(update.CallbackQuery.Id);
                 try
                 {
@@ -126,7 +128,7 @@ namespace ProjectTgBot
                     chatInfos.Remove(lastChatInfo);
                 }
                 catch { }
-                chatInfos.Add(new(formInfo.FormName, update.CallbackQuery.From.Id, formInfo.StartMessage, new()));
+                chatInfos.Add(new(formInfo.FormName, update.CallbackQuery.From.Id, formInfo.StepsInfo[0].BotMessage, new()));
                 return;
 
             }
@@ -225,18 +227,17 @@ namespace ProjectTgBot
             }
             else
             {
-                if (chatInfo.PreviousMessage == formInfo.StartMessage)
+                FormAnswers form;
+                try
                 {
-                    ReplyKeyboardMarkup markup = new();
-                    foreach (FormButtonInfo button in formInfo.StepsInfo[0].Buttons)
-                    {
-                        markup.AddButton(button.Title);
-                    }
-                    await bot.SendMessage(message.Chat.Id, formInfo.StepsInfo[0].BotMessage, replyMarkup: markup);
-                    var newChatInfo = new ChatInfo(chatInfo.ActiveForm, chatInfo.Id, formInfo.StepsInfo[0].BotMessage, chatInfo.Data);
-                    chatInfos.Remove(chatInfo);
-                    chatInfos.Add(newChatInfo);
-                    return;
+                    form = formAnswers.First(x => x.ChatId == message.Chat.Id);
+                    form.Answers.Add(message.Text);
+
+                }
+                catch
+                {
+                    form = new(message.Chat.Id, formInfo.FormName, [message.Text]);
+                    formAnswers.Add(form);
                 }
                 for (int i = 0; i < formInfo.StepsInfo.Count; i++)
                 {
@@ -258,10 +259,9 @@ namespace ProjectTgBot
                     }
                     catch
                     {
-                        await bot.SendMessage(message.Chat.Id, "Заполнение формы завершено");
+                        await bot.SendMessage(message.Chat.Id, $"Заполнение формы завершено\n{string.Join(", ", form.Answers)}");
                         chatInfos.Remove(chatInfo);
                         return;
-
                     }
                 }
             }

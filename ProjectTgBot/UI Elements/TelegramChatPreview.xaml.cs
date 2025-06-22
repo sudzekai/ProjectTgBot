@@ -66,7 +66,6 @@ namespace ProjectTgBot.UI_Elements
                     ReplyButtonsContainer.Children.Add(border);
                 }
             }
-            
         }
     }
 }
