@@ -175,7 +175,10 @@ namespace ProjectTgBot
 
         private void AddNewTelegramCommandButton_Click(object sender, RoutedEventArgs e)
         {
-            CommandsPanel.Children.Add(new CommandInfoPanel());
+            if (CommandsPanel.Children.Count == 0 || (!string.IsNullOrWhiteSpace((CommandsPanel.Children[CommandsPanel.Children.Count-1] as CommandInfoPanel).Command) && !string.IsNullOrWhiteSpace((CommandsPanel.Children[CommandsPanel.Children.Count - 1] as CommandInfoPanel).BotAnswer)))
+            {
+                CommandsPanel.Children.Add(new CommandInfoPanel());
+            }
         }
         private void AddButtonInfoIfNotEmpty(CommandInfo commandInfo, string content, string answer, bool isLink)
         {

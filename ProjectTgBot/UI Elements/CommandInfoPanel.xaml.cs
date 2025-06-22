@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace ProjectTgBot.UI_Elements
 {
@@ -98,6 +99,16 @@ namespace ProjectTgBot.UI_Elements
             field = value;
             OnPropertyChanged(PropertyName);
             return true;
+        }
+
+        private void DeleteCommand_Click(object sender, RoutedEventArgs e)
+        {
+            var parentContainer = VisualTreeHelper.GetParent(this) as Panel;
+
+            if (parentContainer != null)
+            {
+                parentContainer.Children.Remove(this);
+            }
         }
     }
 }

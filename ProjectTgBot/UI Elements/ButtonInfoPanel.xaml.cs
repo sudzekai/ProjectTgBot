@@ -94,5 +94,15 @@ namespace ProjectTgBot.UI_Elements
             OnPropertyChanged(PropertyName);
             return true;
         }
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            var parentContainer = VisualTreeHelper.GetParent(this) as Panel;
+
+            if (parentContainer != null)
+            {
+                parentContainer.Children.Remove(this);
+            }
+        }
     }
 }
