@@ -12,7 +12,7 @@ namespace ProjectTgBot.UI_Elements
     /// </summary>
     public partial class CommandInfoPanel : UserControl, INotifyPropertyChanged
     {
-        public ButtonType ButtonType { get; set; } = 0;
+        public Objects.ButtonType ButtonType { get; set; } = 0;
 
         public string Command
         {
@@ -59,7 +59,7 @@ namespace ProjectTgBot.UI_Elements
         {
             if ((ButtonsPanel.Children.Count == 0 || !string.IsNullOrWhiteSpace((ButtonsPanel.Children[ButtonsPanel.Children.Count - 1] as ButtonInfoPanel).ButtonContent) && ButtonsPanel.Children.Count < 6))
             {
-                ButtonsPanel.Children.Add(new ButtonInfoPanel() { IsInline = ButtonType.Equals(ButtonType.Inline) });
+                ButtonsPanel.Children.Add(new ButtonInfoPanel() { IsInline = ButtonType.Equals(Objects.ButtonType.Inline) });
             }
         }
 
@@ -69,13 +69,13 @@ namespace ProjectTgBot.UI_Elements
             {
                 ButtonType = radioButton.Content.ToString() switch
                 {
-                    "Inline" => ButtonType.Inline,
-                    _ => ButtonType.Reply,
+                    "Inline" => Objects.ButtonType.Inline,
+                    _ => Objects.ButtonType.Reply,
                 };
 
                 foreach (ButtonInfoPanel buttonPanel in ButtonsPanel.Children)
                 {
-                    buttonPanel.IsInline = ButtonType.Equals(ButtonType.Inline);
+                    buttonPanel.IsInline = ButtonType.Equals(Objects.ButtonType.Inline);
                 }
 
             }

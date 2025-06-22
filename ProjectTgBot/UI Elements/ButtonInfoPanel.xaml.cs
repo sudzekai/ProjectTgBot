@@ -55,6 +55,7 @@ namespace ProjectTgBot.UI_Elements
         }
 
         public bool IsLink { get; set; }
+        public bool IsFormStart { get; set; }
 
         public ButtonInfoPanel()
         {
@@ -63,6 +64,9 @@ namespace ProjectTgBot.UI_Elements
 
         private void ToggleButton_Checked(object sender, RoutedEventArgs e)
         {
+            if (ToggleLinkToggleButton.IsChecked.Value == true)
+                ToggleFormToggleButton.IsChecked = false;
+
             IsLink = (sender as ToggleButton).IsChecked.Value;
             SecondTextBlock.Text = IsLink ? "Ссылка:" : "Ответ:";
             ButtonAnswerTextBox.ToolTip = IsLink ? "Ссылка, по которой перейдет пользователь нажавший на кнопку" : "Сообщение, которое бот отправит при нажатии на кнопку";
@@ -77,12 +81,12 @@ namespace ProjectTgBot.UI_Elements
             {
                 if (!IsInline)
                 {
-                    ToggleLinkToggleButton.Visibility = Visibility.Hidden;
+                    InlineGrid.Visibility = Visibility.Collapsed;
                     ButtonContentTextBox.ToolTip = "Текст, который будет изображен на кнопке и отправлен пользователем, при нажатии на неё";
                 }
                 else
                 {
-                    ToggleLinkToggleButton.Visibility = Visibility.Visible;
+                    InlineGrid.Visibility = Visibility.Visible;
                     ButtonContentTextBox.ToolTip = "Текст, который будет изображен на кнопке";
                 }
             }
@@ -103,6 +107,16 @@ namespace ProjectTgBot.UI_Elements
             {
                 parentContainer.Children.Remove(this);
             }
+        }
+
+        private void ToggleFormToggleButton_Checked(object sender, RoutedEventArgs e)
+        {
+            if (ToggleFormToggleButton.IsChecked.Value == true) 
+                ToggleLinkToggleButton.IsChecked = false;
+
+            IsFormStart = (sender as ToggleButton).IsChecked.Value;
+            SecondTextBlock.Text = IsFormStart ? "Название формы:" : "Ответ:";
+            ButtonAnswerTextBox.ToolTip = IsFormStart ? "Форма, которая запустится при нажатии на кнопку" : "Сообщение, которое бот отправит при нажатии на кнопку";
         }
     }
 }

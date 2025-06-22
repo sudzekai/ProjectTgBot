@@ -22,14 +22,24 @@
             <TextBlock x:Name="SecondTextBlock" Text="Ответ:"/>
             <TextBox ToolTip="Сообщение, которое бот отправит при нажатии на кнопку" Name="ButtonAnswerTextBox" Style="{StaticResource DarkTextBox}" Text="{Binding ButtonAnswer, RelativeSource={RelativeSource AncestorType=UserControl}, UpdateSourceTrigger=PropertyChanged}"/>
             <Grid Margin="0 5 0 0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <ToggleButton Name="ToggleLinkToggleButton" Visibility="Visible" Height="30" Padding="5" IsChecked="False" Checked="ToggleButton_Checked" Unchecked="ToggleButton_Checked" Background="#2b2b2b">
-                    <TextBlock Margin="0" Text="Ссылка"/>
-                </ToggleButton>
-                <Button Grid.Column="1" Name="DeleteButton" Background="#2b2b2b" Height="30" Padding="5" Margin="0 0 0 0" Click="DeleteButton_Click" HorizontalAlignment="Right">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid Name="InlineGrid" Visibility="Collapsed">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <ToggleButton Margin="0 0 2.5 0" Name="ToggleLinkToggleButton" Height="30" Padding="5" IsChecked="False" Checked="ToggleButton_Checked" Unchecked="ToggleButton_Checked" Background="#2b2b2b" ToolTip="Делает эту кнопку ссылочной: при нажатии на неё переводит пользователя на указанный в ссылке интернет ресурс">
+                        <TextBlock Margin="0" Text="Ссылка"/>
+                    </ToggleButton>
+                    <ToggleButton Margin="2.5 0 0 0" Grid.Column="2" Name="ToggleFormToggleButton" Height="30" Padding="5" IsChecked="False" Checked="ToggleFormToggleButton_Checked"  Unchecked="ToggleFormToggleButton_Checked" Background="#2b2b2b" ToolTip="Делает кнопку стартовой для начала ввода данных в форму">
+                        <TextBlock Margin="0" Text="Форма"/>
+                    </ToggleButton>
+                    
+                </Grid>
+                <Button Grid.Row="1" Name="DeleteButton" Background="#2b2b2b" Height="30" Padding="5" Margin="0 5 0 0" Click="DeleteButton_Click" HorizontalAlignment="Stretch">
                     <TextBlock Margin="0" Text="Удалить кнопку"/>
                 </Button>
             </Grid>

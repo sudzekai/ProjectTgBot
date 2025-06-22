@@ -4,19 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectTgBot
+namespace ProjectTgBot.Objects
 {
     internal class ButtonInfo
     {
         public string Content = "";
         public string AnswerOrLink = "";
         public bool IsLink = false;
+        public bool IsFromStart = false;
 
-        public ButtonInfo(string content, string answerOrLink, bool isLink)
+        public ButtonInfo(string content, string answerOrLink, bool isLink = false, bool isFormStart = false)
         {
             Content = content;
             AnswerOrLink = answerOrLink;
             IsLink = isLink;
+            IsFromStart = isFormStart;
         }
 
         public override string ToString()
@@ -25,5 +27,4 @@ namespace ProjectTgBot
         }
     }
 
-    public enum ButtonType { Reply, Inline }
 }
