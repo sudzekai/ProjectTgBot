@@ -119,7 +119,7 @@ namespace ProjectTgBot.UI_Elements
             {
                 buttons.Add(panel.ButtonContent);
             }
-            var preview = new TelegramChatPreview(buttons, BotAnswer, ButtonType);
+            var preview = new TelegramChatPreview(buttons, BotAnswer, Command, ButtonType);
             PreviewPanel.Children.Clear();
             PreviewPanel.Children.Add(preview);
         }

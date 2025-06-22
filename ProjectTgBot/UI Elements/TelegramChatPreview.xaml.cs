@@ -22,11 +22,12 @@ namespace ProjectTgBot.UI_Elements
     public partial class TelegramChatPreview : UserControl
     {
         public int Columns { get; set; } = 0;
-        public TelegramChatPreview(List<string> buttons, string message, ButtonType type = 0)
+        public TelegramChatPreview(List<string> buttons, string message, string messageFromUser, ButtonType type = 0)
         {
             InitializeComponent();
             int columns = buttons.Count;
             BotMessage.Text = message;
+            UserMessage.Text = messageFromUser;
             
             if (type == ButtonType.Inline)
             {
