@@ -25,6 +25,7 @@ namespace ProjectTgBot
             List<BotCommand> commands = [];
             foreach (CommandInfoPanel telegramCommand in CommandsPanel.Children)
             {
+                commands.Add(new(telegramCommand.Command, telegramCommand.CommandDescription));
                 CommandInfo telegramCommandInfo = new() { Command = telegramCommand.Command, ButtonType = telegramCommand.ButtonType, Message = telegramCommand.BotAnswer };
                 foreach (ButtonInfoPanel panel in telegramCommand.ButtonsPanel.Children)
                 {
