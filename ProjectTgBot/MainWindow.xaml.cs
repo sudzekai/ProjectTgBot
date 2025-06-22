@@ -40,7 +40,7 @@ namespace ProjectTgBot
                 foreach (ButtonInfoPanel panel in telegramCommand.ButtonsPanel.Children)
                 {
                     commandsInfo.Select(x => x.Command = telegramCommand.Command);
-                    AddButtonInfoIfNotEmpty(telegramCommandInfo, panel.ButtonContent, EscapeMarkdown(panel.ButtonAnswer), panel.IsLink, panel.IsFormStart);
+                    AddButtonInfoIfNotEmpty(telegramCommandInfo, panel.ButtonContent, panel.ButtonAnswer, panel.IsLink, panel.IsFormStart);
                 }
                 commandsInfo.Add(telegramCommandInfo);
             }
@@ -94,45 +94,40 @@ namespace ProjectTgBot
             }
             catch (InvalidOperationException)
             {
-                return;
-            }
-            if (!update.CallbackQuery.Data.Contains("formStart"))
-            {
-                foreach (ButtonInfo button in command.ButtonsInfo)
+                foreach (CommandInfo commandInfo in commandsInfo)
                 {
-                    if (update.CallbackQuery.Data.Equals(button.Content) && !button.IsLink)
+                    foreach (ButtonInfo button in commandInfo.ButtonsInfo)
                     {
-                        await bot.SendMessage(update.CallbackQuery.Message.Chat.Id, button.AnswerOrLink, parseMode: Telegram.Bot.Types.Enums.ParseMode.MarkdownV2);
-                        await bot.AnswerCallbackQuery(update.CallbackQuery.Id);
+                        if (update.CallbackQuery.Data.Equals(button.Content) && !button.IsLink)
+                        {
+                            await bot.SendMessage(update.CallbackQuery.Message.Chat.Id, button.AnswerOrLink, parseMode: Telegram.Bot.Types.Enums.ParseMode.MarkdownV2);
+                            await bot.AnswerCallbackQuery(update.CallbackQuery.Id);
 
-                        return;
+                            return;
+                        }
                     }
                 }
             }
-            else
+
+            var formInfo = new FormInfo();
+            try
             {
-                var formInfo = new FormInfo();
-                try
-                {
-                    formInfo = formsInfo.First(x => update.CallbackQuery.Data.Contains(x.FormName));
-                }
-                catch
-                {
-                    return;
-                }
-                await bot.SendMessage(update.CallbackQuery.Message.Chat.Id, formInfo.StepsInfo[0].BotMessage, parseMode: Telegram.Bot.Types.Enums.ParseMode.MarkdownV2);
-                await bot.AnswerCallbackQuery(update.CallbackQuery.Id);
-                try
-                {
-                    var lastChatInfo = chatInfos.First(x => x.Id == update.CallbackQuery.From.Id);
-                    chatInfos.Remove(lastChatInfo);
-                }
-                catch { }
-                chatInfos.Add(new(formInfo.FormName, update.CallbackQuery.From.Id, formInfo.StepsInfo[0].BotMessage, new()));
-                return;
-
+                formInfo = formsInfo.First(x => update.CallbackQuery.Data.Contains(x.FormName));
             }
-
+            catch
+            {
+                return;
+            }
+            await bot.SendMessage(update.CallbackQuery.Message.Chat.Id, formInfo.StepsInfo[0].BotMessage, parseMode: Telegram.Bot.Types.Enums.ParseMode.MarkdownV2);
+            await bot.AnswerCallbackQuery(update.CallbackQuery.Id);
+            try
+            {
+                var lastChatInfo = chatInfos.First(x => x.Id == update.CallbackQuery.From.Id);
+                chatInfos.Remove(lastChatInfo);
+            }
+            catch { }
+            chatInfos.Add(new(formInfo.FormName, update.CallbackQuery.From.Id, formInfo.StepsInfo[0].BotMessage, new()));
+            return;
         }
 
         private async Task GetMeBot()
@@ -167,14 +162,20 @@ namespace ProjectTgBot
                 }
                 catch (InvalidOperationException)
                 {
-                    StringBuilder text = new();
-                    foreach (var info in commandsInfo)
+                    foreach (var commandInfo in commandsInfo)
                     {
-                        text.AppendLine(@$"*{info.Command}* \- {info.CommandDescription}");
+                        foreach (ButtonInfo button in commandInfo.ButtonsInfo)
+                        {
+                            if (message.Text.Equals(button.Content))
+                            {
+                                await bot.SendMessage(message.Chat.Id, button.AnswerOrLink, parseMode: Telegram.Bot.Types.Enums.ParseMode.MarkdownV2);
+                                return;
+                            }
+                        }
                     }
-                    await bot.SendMessage(message.From.Id, $"Я не знаю такой команды\nКоманды:\n{text}", parseMode: Telegram.Bot.Types.Enums.ParseMode.MarkdownV2);
                     return;
                 }
+
 
                 if (message.Text.Equals(command.Command))
                 {
@@ -203,7 +204,7 @@ namespace ProjectTgBot
                                 (markup as InlineKeyboardMarkup)?.AddButton(inlineButton);
 
                             }
-                            if (button.IsFromStart)
+                            else if (button.IsFromStart)
                             {
                                 (markup as InlineKeyboardMarkup)?.AddButton(button.Content, $"{button.AnswerOrLink}.formStart");
                             }
@@ -215,14 +216,6 @@ namespace ProjectTgBot
                         }
                     }
                     await bot.SendMessage(message.Chat.Id, command.Message, replyMarkup: markup, parseMode: Telegram.Bot.Types.Enums.ParseMode.MarkdownV2);
-                }
-                foreach (ButtonInfo button in command.ButtonsInfo)
-                {
-                    if (message.Text.Equals(button.Content))
-                    {
-                        await bot.SendMessage(message.Chat.Id, button.AnswerOrLink, parseMode: Telegram.Bot.Types.Enums.ParseMode.MarkdownV2);
-                        return;
-                    }
                 }
             }
             else
@@ -332,6 +325,13 @@ namespace ProjectTgBot
         private void AddNewTelegramFormButton_Click(object sender, RoutedEventArgs e)
         {
             FormsPanel.Children.Add(new FormInfoPanel());
+        }
+
+        private void TableWindowButton_Click(object sender, RoutedEventArgs e)
+        {
+            TableWindow TableWindow = new();
+
+            TableWindow.Show();
         }
     }
 }

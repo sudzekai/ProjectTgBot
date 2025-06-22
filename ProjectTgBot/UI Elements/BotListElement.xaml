@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:ProjectTgBot.UI_Elements"
              mc:Ignorable="d" >
 
-    <Border Background="#1e1e1e" Height="50" CornerRadius="10" Cursor="Hand">
+    <Border Background="#181825" Height="50" CornerRadius="10" Cursor="Hand">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>

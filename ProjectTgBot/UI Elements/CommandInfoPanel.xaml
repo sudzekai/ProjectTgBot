@@ -8,7 +8,7 @@
              xmlns:ui="clr-namespace:ProjectTgBot.UI_Elements"
              >
 
-    <Border Background="#121212" Margin="5" CornerRadius="15" Height="auto" Padding="20 20 20 20">
+    <Border Background="#181825" Margin="5" CornerRadius="15" Height="auto" Padding="20 20 20 20">
         <StackPanel Orientation="Horizontal">
             <Grid>
                 <Grid.RowDefinitions>
@@ -31,7 +31,7 @@
                         <Button Name="AddNewTelegramBtnButton"
 BorderThickness="0"
 Content="Добавить кнопку" 
-Background="#2b2b2b" 
+Background="#31314d" 
 Width="200" Height="30" Margin="0"
 HorizontalAlignment="Left" Click="AddNewTelegramBtnButton_Click" Padding="3"/>
 
@@ -49,7 +49,7 @@ HorizontalAlignment="Left" Click="AddNewTelegramBtnButton_Click" Padding="3"/>
                         <StackPanel Name="ButtonsType" Orientation="Horizontal" RadioButton.Checked="ButtonType_Checked">
                             <StackPanel.Resources>
                                 <Style TargetType="RadioButton" BasedOn="{StaticResource {x:Type ToggleButton}}">
-                                    <Setter Property="Background" Value="#2b2b2b"/>
+                                    <Setter Property="Background" Value="#31314d"/>
                                     <Setter Property="Height" Value="30"/>
                                     <Setter Property="Width" Value="95"/>
                                     <Setter Property="BorderThickness" Value="0"/>
@@ -76,9 +76,9 @@ HorizontalAlignment="Left" Click="AddNewTelegramBtnButton_Click" Padding="3"/>
                 </Grid>
                 <WrapPanel Grid.Row="1" Name="ButtonsPanel" Margin="0 10 0 0" ItemWidth="210" ItemHeight="auto"/>
 
-                <Button Grid.Row="2" Name="CommitChanges" Content="Сохранить изменения" Background="#2b2b2b" Width="200" HorizontalAlignment="Right" Margin="0 10 10 0" Click="CommitChanges_Click"  Padding="3" VerticalAlignment="Bottom"/>
-                <Button Grid.Row="2" Name="DeleteCommand" Content="Удалить команду" Background="#2b2b2b" Width="200" HorizontalAlignment="Left" Margin="0 10 10 0" Click="DeleteCommand_Click"  Padding="3" VerticalAlignment="Bottom"/>
-                <Button Grid.Row="2" Name="ShowPreview" Content="Обновить предпросмотр" Background="#2b2b2b" Width="200" HorizontalAlignment="Center" Margin="0 10 10 0" Click="ShowPreview_Click"  Padding="3" VerticalAlignment="Bottom"/>
+                <Button Grid.Row="2" Name="CommitChanges" Content="Сохранить изменения" Background="#31314d" Width="200" HorizontalAlignment="Right" Margin="0 10 10 0" Click="CommitChanges_Click"  Padding="3" VerticalAlignment="Bottom"/>
+                <Button Grid.Row="2" Name="DeleteCommand" Content="Удалить команду" Background="#31314d" Width="200" HorizontalAlignment="Left" Margin="0 10 10 0" Click="DeleteCommand_Click"  Padding="3" VerticalAlignment="Bottom"/>
+                <Button Grid.Row="2" Name="ShowPreview" Content="Обновить предпросмотр" Background="#31314d" Width="200" HorizontalAlignment="Center" Margin="0 10 10 0" Click="ShowPreview_Click"  Padding="3" VerticalAlignment="Bottom"/>
             </Grid>
             <Grid>
                 <TextBlock Text="Предпросмотр:" Height="20" VerticalAlignment="Top"/>
