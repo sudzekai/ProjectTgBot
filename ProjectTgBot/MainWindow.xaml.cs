@@ -24,6 +24,7 @@ namespace ProjectTgBot
         {
             InitializeComponent();
             botListElement.IsRunning = false;
+
         }
 
         private void RunBotButton_Click(object sender, RoutedEventArgs e)
@@ -329,9 +330,15 @@ namespace ProjectTgBot
 
         private void TableWindowButton_Click(object sender, RoutedEventArgs e)
         {
-            TableWindow TableWindow = new();
+            var tableWindow = new TableWindow();
 
-            TableWindow.Show();
+            var viewModel = new MainViewModel();
+            tableWindow.DataContext = viewModel;
+
+            tableWindow.Show();
+
+            if (viewModel.ImportExcelCommand.CanExecute(null))
+                viewModel.ImportExcelCommand.Execute(null);
         }
     }
 }

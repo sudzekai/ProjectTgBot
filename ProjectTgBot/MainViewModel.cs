@@ -85,7 +85,7 @@ namespace ProjectTgBot
 
         public ICommand ImportExcelCommand => new RelayCommand(_ => ImportFromExcel());
 
-        private void ImportFromExcel()
+        public void ImportFromExcel()
         {
             var openFileDialog = new OpenFileDialog
             {

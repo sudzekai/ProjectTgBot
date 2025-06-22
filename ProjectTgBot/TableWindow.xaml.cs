@@ -10,6 +10,8 @@ namespace ProjectTgBot
         public TableWindow()
         {
             InitializeComponent();
+
+            
         }
     }
 }
