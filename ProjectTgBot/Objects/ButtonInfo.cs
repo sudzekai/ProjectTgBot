@@ -23,7 +23,7 @@ namespace ProjectTgBot.Objects
 
         public override string ToString()
         {
-            return $"(content: {Content}, answer or link: {AnswerOrLink}, IsLink: {IsLink})";
+            return $"(content: {Content}, answer or link: {AnswerOrLink}, IsLink: {IsLink}, IsFromStart: {IsFromStart})";
         }
     }
 }

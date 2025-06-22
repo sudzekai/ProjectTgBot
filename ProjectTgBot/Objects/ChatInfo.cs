@@ -8,9 +8,11 @@ namespace ProjectTgBot.Objects
 {
     class ChatInfo
     {
-        public ChatInfo(long id, List<string> data)
+        public ChatInfo(string activeForm, long id, string previousMessage, List<string> data)
         {
+            ActiveForm = activeForm;
             Id = id;
+            PreviousMessage = previousMessage;
             Data = data;
         }
 

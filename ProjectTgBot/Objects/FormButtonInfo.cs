@@ -6,20 +6,18 @@ using System.Threading.Tasks;
 
 namespace ProjectTgBot.Objects
 {
-    class FormButtonInfo
+    public class FormButtonInfo
     {
-        public string Message { get; set; } = "";
-        public string Content { get; set; } = "";
+        public string Title { get; set; } = "";
 
-        public FormButtonInfo(string content, string message)
+        public FormButtonInfo(string message)
         {
-            Message = message;
-            Content = content;
+            Title = message;
         }
 
         public override string ToString()
         {
-            return $"(content: {Content})";
+            return $"Title: {Title}";
         }
     }
 }

@@ -20,8 +20,8 @@
 
                 <StackPanel Margin="0" Grid.Column="0">
                     <TextBlock Text="Название формы:" Height="20"/>
-                    <TextBox Text="{Binding Command, RelativeSource={RelativeSource AncestorType=UserControl}, UpdateSourceTrigger=PropertyChanged}"
-    Name="CommandTextBox" Width="200" Height="30" Style="{StaticResource DarkTextBox}" Margin="0,0,0,0" HorizontalAlignment="Left" ToolTip="Команда или текст, при написании которого, выполнятся условия ниже"/>
+                    <TextBox Name="FormNameTextBox"
+                             Width="200" Height="30" Style="{StaticResource DarkTextBox}" Margin="0,0,0,0" HorizontalAlignment="Left" ToolTip="Команда или текст, при написании которого, выполнятся условия ниже"/>
                     <TextBlock Text="Шаги" FontWeight="Bold" Margin="0 20 0 0" Height="20"/>
                     <Button Name="AddNewStepButton"
 BorderThickness="0"
@@ -37,7 +37,7 @@ HorizontalAlignment="Left" Click="AddNewStepButton_Click" Padding="3"/>
                 </StackPanel>
                 <StackPanel Grid.Column="2">
                     <TextBlock Text="Сообщение бота:" Height="20" />
-                    <TextBox Text="{Binding BotAnswer, RelativeSource={RelativeSource AncestorType=UserControl}, UpdateSourceTrigger=PropertyChanged}"
+                    <TextBox
                  Name="MessageTextBox" 
                  HorizontalAlignment="Stretch" Height="100"
                  Style="{StaticResource DarkTextBox}" 

@@ -17,7 +17,7 @@
     <Border BorderBrush="#555" BorderThickness="1" Padding="10" Background="#2B2B2B" Margin="0 0 10 10" Width="200">
         <StackPanel>
             <TextBlock  Text="Надпись на кнопке:"/>
-            <TextBox ToolTip="Текст, который будет изображен на кнопке и отправлен пользователем, при нажатии на неё" Name="ButtonContentTextBox" Style="{StaticResource DarkTextBox}" Text="{Binding ButtonContent, RelativeSource={RelativeSource AncestorType=UserControl}, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox ToolTip="Текст, который будет изображен на кнопке и отправлен пользователем, при нажатии на неё" Name="ButtonContentTextBox" Style="{StaticResource DarkTextBox}" TextChanged="ButtonContentTextBox_TextChanged"/>
             <Button Grid.Row="1" Name="DeleteButton" Background="#2b2b2b" Height="30" Padding="5" Margin="0 5 0 0" Click="DeleteButton_Click"  HorizontalAlignment="Stretch">
                 <TextBlock Margin="0" Text="Удалить кнопку"/>
             </Button>

@@ -20,14 +20,23 @@ namespace ProjectTgBot.UI_Elements
     /// </summary>
     public partial class FormButtonInfoPanel : UserControl
     {
+        public string Text {  get; set; }
         public FormButtonInfoPanel()
         {
             InitializeComponent();
         }
 
+        public event RoutedEventHandler TextChanged;
+
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void ButtonContentTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Text = (sender as TextBox).Text;
+            TextChanged?.Invoke(this, e);
         }
     }
 }

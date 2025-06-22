@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjectTgBot.Objects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,8 @@ namespace ProjectTgBot.UI_Elements
     /// </summary>
     public partial class FormInfoPanel : UserControl
     {
+        public FormInfo FormInfo { get; set; } = new();
+
         public FormInfoPanel()
         {
             InitializeComponent();
@@ -32,12 +35,24 @@ namespace ProjectTgBot.UI_Elements
 
         private void DeleteCommand_Click(object sender, RoutedEventArgs e)
         {
+            var parentContainer = VisualTreeHelper.GetParent(this) as Panel;
 
+            if (parentContainer != null)
+            {
+                parentContainer.Children.Remove(this);
+            }
         }
 
         private void CommitChanges_Click(object sender, RoutedEventArgs e)
         {
-
+            FormInfo = new();
+            foreach(StepInfoPanel stepInfoPanel in StepsPanel.Children)
+            {
+                FormInfo.StepsInfo.Add(stepInfoPanel.StepInfo);
+            }
+            FormInfo.FormName = FormNameTextBox.Text;
+            FormInfo.StartMessage = MessageTextBox.Text;
+            MessageBox.Show($"{FormInfo.ToString()}\n\n\n{FormInfo.StepsInfo.Count}");
         }
     }
 }
