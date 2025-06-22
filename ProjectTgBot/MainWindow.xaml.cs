@@ -11,8 +11,7 @@ namespace ProjectTgBot
     {
         TelegramBotClient bot;
         readonly CancellationTokenSource _cts = new();
-        ButtonType buttonType = ButtonType.Reply;
-        CommandInfo commandInfo;
+        List<CommandInfo> commandsInfo;
 
         public MainWindow()
         {
@@ -22,12 +21,20 @@ namespace ProjectTgBot
 
         private void RunBotButton_Click(object sender, RoutedEventArgs e)
         {
-            var commands = new[]
+            commandsInfo = new();
+            List<BotCommand> commands = [];
+            foreach (CommandInfoPanel telegramCommand in CommandsPanel.Children)
             {
-                 new BotCommand { Command = CommandTextBox.Text, Description = BotCommandDescriptionTextBox.Text },
-            };
+                CommandInfo telegramCommandInfo = new() { Command = telegramCommand.Command, ButtonType = telegramCommand.ButtonType, Message = telegramCommand.BotAnswer };
+                foreach (ButtonInfoPanel panel in telegramCommand.ButtonsPanel.Children)
+                {
+                    commandsInfo.Select(x => x.Command = telegramCommand.Command);
+                    AddButtonInfoIfNotEmpty(telegramCommandInfo, panel.ButtonContent, panel.ButtonAnswer, panel.IsLink);
+                }
+                commandsInfo.Add(telegramCommandInfo);
+            }
 
-            MessageBox.Show(commandInfo.ToString());
+            MessageBox.Show(string.Join("\n\n", commandsInfo));
 
             try
             {
@@ -52,7 +59,28 @@ namespace ProjectTgBot
 
         private async Task Bot_OnUpdate(Update update)
         {
-            foreach (ButtonInfo button in commandInfo.ButtonsInfo)
+            CommandInfo command;
+            try
+            {
+                command = commandsInfo.First(x =>
+                {
+                    foreach (ButtonInfo button in x.ButtonsInfo)
+                    {
+                        if (button.Content == update.CallbackQuery.Data)
+                        {
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+                );
+            }
+            catch (InvalidOperationException)
+            {
+                return;
+            }
+
+            foreach (ButtonInfo button in command.ButtonsInfo)
             {
                 if (update.CallbackQuery.Data.Equals(button.Content) && !button.IsLink)
                 {
@@ -72,14 +100,25 @@ namespace ProjectTgBot
 
         private async Task Bot_OnMessage(Message message, Telegram.Bot.Types.Enums.UpdateType type)
         {
-            if (message.Text.Equals(commandInfo.Command))
+            CommandInfo command;
+            try
+            {
+                command = commandsInfo.First(x => x.Command == message.Text);
+            }
+            catch (InvalidOperationException)
+            {
+                await bot.SendMessage(message.From.Id, "Я не знаю такой команды");
+                return;
+            }
+            
+            if (message.Text.Equals(command.Command))
             {
                 ReplyMarkup markup;
 
-                if (commandInfo.ButtonType.Equals(ButtonType.Reply))
+                if (command.ButtonType.Equals(ButtonType.Reply))
                 {
                     markup = new ReplyKeyboardMarkup();
-                    foreach (ButtonInfo button in commandInfo.ButtonsInfo)
+                    foreach (ButtonInfo button in command.ButtonsInfo)
                     {
                         (markup as ReplyKeyboardMarkup)?.AddButton(button.Content);
                     }
@@ -88,7 +127,7 @@ namespace ProjectTgBot
                 else
                 {
                     markup = new InlineKeyboardMarkup();
-                    foreach (ButtonInfo button in commandInfo.ButtonsInfo)
+                    foreach (ButtonInfo button in command.ButtonsInfo)
                     {
                         if (button.IsLink)
                         {
@@ -106,9 +145,9 @@ namespace ProjectTgBot
                         }
                     }
                 }
-                await bot.SendMessage(message.Chat.Id, commandInfo.Message, replyMarkup: markup);
+                await bot.SendMessage(message.Chat.Id, command.Message, replyMarkup: markup);
             }
-            foreach (ButtonInfo button in commandInfo.ButtonsInfo)
+            foreach (ButtonInfo button in command.ButtonsInfo)
             {
                 if (message.Text.Equals(button.Content))
                 {
@@ -117,34 +156,6 @@ namespace ProjectTgBot
                 }
             }
         }
-
-        private void AddButtonInfoIfNotEmpty(CommandInfo commandInfo, string content, string answer, bool isLink)
-        {
-            if (!string.IsNullOrEmpty(content))
-            {
-                commandInfo.ButtonsInfo.Add(new ButtonInfo(content, answer, isLink));
-            }
-        }
-
-        private void ButtonType_Checked(object sender, RoutedEventArgs e)
-        {
-            if (e.OriginalSource is RadioButton radioButton && sender is StackPanel panel && (e.OriginalSource as RadioButton).Content is not null)
-            {
-                buttonType = radioButton.Content.ToString() switch
-                {
-                    "Inline" => ButtonType.Inline,
-                    _ => ButtonType.Reply,
-                };
-                MessageBox.Show(buttonType.ToString());
-
-                foreach (ButtonInfoPanel buttonPanel in ButtonsPanel.Children)
-                {
-                    buttonPanel.IsInline = buttonType.Equals(ButtonType.Inline);
-                }
-
-            }
-        }
-
         private void Border_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             BotListStackPanel.Visibility = Visibility.Collapsed;
@@ -162,28 +173,16 @@ namespace ProjectTgBot
             botListElement.IsRunning = !botListElement.IsRunning;
         }
 
-        private void AddNewTelegramBtnButton_Click(object sender, RoutedEventArgs e)
+        private void AddNewTelegramCommandButton_Click(object sender, RoutedEventArgs e)
         {
-            ButtonsPanel.Children.Add(new ButtonInfoPanel() { IsInline = buttonType.Equals(ButtonType.Inline) });
+            CommandsPanel.Children.Add(new CommandInfoPanel());
         }
-
-        private void AddNewCommand_Click(object sender, RoutedEventArgs e)
+        private void AddButtonInfoIfNotEmpty(CommandInfo commandInfo, string content, string answer, bool isLink)
         {
-            commandInfo = new CommandInfo
+            if (!string.IsNullOrEmpty(content))
             {
-                Command = CommandTextBox.Text,
-                Message = MessageTextBox.Text,
-                ButtonType = buttonType
-            };
-            foreach (ButtonInfoPanel panel in ButtonsPanel.Children)
-            {
-                AddButtonInfoIfNotEmpty(commandInfo, panel.ButtonContent, panel.ButtonAnswer, panel.IsLink);
+                commandInfo.ButtonsInfo.Add(new ButtonInfo(content, answer, isLink));
             }
-        }
-
-        private void MessageTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
         }
     }
 }

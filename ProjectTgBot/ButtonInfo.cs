@@ -25,5 +25,5 @@ namespace ProjectTgBot
         }
     }
 
-    enum ButtonType { Reply, Inline }
+    public enum ButtonType { Reply, Inline }
 }
