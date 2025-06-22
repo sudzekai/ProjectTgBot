@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using ProjectTgBot.Objects;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
@@ -109,6 +110,18 @@ namespace ProjectTgBot.UI_Elements
             {
                 parentContainer.Children.Remove(this);
             }
+        }
+
+        private void ShowPreview_Click(object sender, RoutedEventArgs e)
+        {
+            List<string> buttons = [];
+            foreach (ButtonInfoPanel panel in ButtonsInfoWrapPanel.Children)
+            {
+                buttons.Add(panel.ButtonContent);
+            }
+            var preview = new TelegramChatPreview(buttons, BotAnswer, ButtonType);
+            PreviewPanel.Children.Clear();
+            PreviewPanel.Children.Add(preview);
         }
     }
 }

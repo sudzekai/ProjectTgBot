@@ -17,11 +17,12 @@ namespace ProjectTgBot
         List<CommandInfo> commandsInfo;
         List<FormInfo> formsInfo;
 
+        BotListElement activeBot = new();
 
         public MainWindow()
         {
             InitializeComponent();
-            botListElement.IsRunning = true;
+            botListElement.IsRunning = false;
         }
 
         private void RunBotButton_Click(object sender, RoutedEventArgs e)
@@ -51,6 +52,8 @@ namespace ProjectTgBot
             {
                 return;
             }
+            botListElement.IsRunning = true;
+
             bot.SetMyCommands(commands);
             GetMeBot();
             bot.OnMessage += Bot_OnMessage;
@@ -102,6 +105,8 @@ namespace ProjectTgBot
         private async Task GetMeBot()
         {
             var botinfo = await bot.GetMe();
+            MainBodyNameTextBlock.Text = botinfo.Username;
+
             MessageBox.Show($"Бот запущен: @{botinfo.Username}");
         }
 
@@ -170,12 +175,16 @@ namespace ProjectTgBot
         }
         private void Border_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
+            activeBot = (sender as BotListElement);
+            MainBodyNameTextBlock.Text = (sender as BotListElement).BotName;
             BotListStackPanel.Visibility = Visibility.Collapsed;
             BotSettingsWindow.Visibility = Visibility.Visible;
         }
 
         private void BotListButton_Click(object sender, RoutedEventArgs e)
         {
+            activeBot.BotName = MainBodyNameTextBlock.Text;
+            MainBodyNameTextBlock.Text = "Боты";
             BotSettingsWindow.Visibility = Visibility.Collapsed;
             BotListStackPanel.Visibility = Visibility.Visible;
         }
@@ -220,6 +229,11 @@ namespace ProjectTgBot
             }
 
             return escapedText.ToString();
+        }
+
+        private void AddNewTelegramFormButton_Click(object sender, RoutedEventArgs e)
+        {
+            FormsPanel.Children.Add(new FormInfoPanel());
         }
     }
 }

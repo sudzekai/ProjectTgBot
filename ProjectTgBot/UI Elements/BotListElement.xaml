@@ -22,7 +22,7 @@
                 </TextBlock>
 
                 <Border Name="StatusBackground" VerticalAlignment="Center" Margin="10 0 0 0" CornerRadius="7" Background="#2a1215">
-                    <TextBlock Name="BotStatusTextBlock" Text="{Binding BotStatus, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                    <TextBlock Name="BotStatusTextBlock"
                                Foreground="#d31b1b"
                                VerticalAlignment="Center" 
                                Margin="0"

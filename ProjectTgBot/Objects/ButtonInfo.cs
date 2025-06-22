@@ -26,5 +26,4 @@ namespace ProjectTgBot.Objects
             return $"(content: {Content}, answer or link: {AnswerOrLink}, IsLink: {IsLink})";
         }
     }
-
 }

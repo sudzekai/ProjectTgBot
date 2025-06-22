@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace ProjectTgBot.Objects
 {
-    class BotUser
+    class ChatInfo
     {
-        public BotUser(long id, List<string> data)
+        public ChatInfo(long id, List<string> data)
         {
             Id = id;
             Data = data;
         }
 
+        public string ActiveForm { get; set; } = "";
         public long Id { get; set; } = 0;
         public string PreviousMessage { get; set; } = "";
         public List<string> Data { get; set; } = [];
-
     }
 }

@@ -21,14 +21,6 @@ namespace ProjectTgBot.UI_Elements
         public static readonly DependencyProperty BotNameProperty =
             DependencyProperty.Register("BotName", typeof(string), typeof(BotListElement), new PropertyMetadata(string.Empty));
 
-        private string _botStatus;
-
-        public string BotStatus
-        {
-            get => _botStatus;
-            set { Set(ref _botStatus, value); }
-        }
-
         private bool _isRunning;
 
         public bool IsRunning
@@ -42,12 +34,11 @@ namespace ProjectTgBot.UI_Elements
         public static readonly DependencyProperty IsRunningProperty =
             DependencyProperty.Register("IsRunning", typeof(bool), typeof(BotListElement), new PropertyMetadata(false));
 
-
-
-
         public BotListElement()
         {
             InitializeComponent();
+            BotStatusTextBlock.Text = "Бот выключен";
+
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -58,13 +49,13 @@ namespace ProjectTgBot.UI_Elements
             {
                 StatusBackground.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#1d3712"));
                 BotStatusTextBlock.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#318617"));
-                BotStatus = "Бот включен";
+                BotStatusTextBlock.Text = "Бот включен";
             }
             else if (!IsRunning)
             {
                 StatusBackground.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#2a1215"));
                 BotStatusTextBlock.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#d31b1b"));
-                BotStatus = "Бот выключен";
+                BotStatusTextBlock.Text = "Бот выключен";
 
             }
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(PropertyName));
