@@ -6,9 +6,74 @@
         xmlns:local="clr-namespace:ProjectTgBot"
         xmlns:ui="clr-namespace:ProjectTgBot.UI_Elements"
         mc:Ignorable="d"
+        Icon="/Images/Iconka.ico"
+        WindowState="Maximized"
         Title="BizBuddyBot" Height="600" Width="1000">
 
     <Window.Resources>
+        <Style TargetType="DatePicker">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="#FF2E2E3E"/>
+            <Setter Property="BorderBrush" Value="#FF44475A"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="4"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="DatePicker">
+                        <Grid>
+                            <DatePickerTextBox x:Name="PART_TextBox"
+                                       Background="{TemplateBinding Background}"
+                                       Foreground="{TemplateBinding Foreground}"
+                                       BorderBrush="{TemplateBinding BorderBrush}"
+                                       BorderThickness="{TemplateBinding BorderThickness}" />
+                            <Button x:Name="PART_Button"
+                            HorizontalAlignment="Right"
+                            Width="20"
+                            Margin="0"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="0">
+                                <Path Data="M 0 0 L 4 4 L 8 0 Z"
+                              Fill="White"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center"/>
+                            </Button>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="CalendarDayButton">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="#FF44475A"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+
+
+        <Style TargetType="DatePickerTextBox">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="#FF2E2E3E"/>
+            <Setter Property="BorderBrush" Value="#FF44475A"/>
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style>
+
+        <Style TargetType="Calendar">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="#FF2E2E3E"/>
+            <Setter Property="BorderBrush" Value="#FF44475A"/>
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style>
+
+        <Style TargetType="CalendarButton">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="#44475A"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+
+
     </Window.Resources>
 
     <Grid Background="#1e1e2e">
@@ -111,9 +176,9 @@
                 <TextBlock Text="Бот" FontWeight="Bold" Margin="0 0 0 10"/>
 
                 <TextBlock Text="Токен:"/>
-                <StackPanel Orientation="Horizontal" Height="30">
+                <StackPanel Orientation="Horizontal" Height="30" Margin="5">
                     <TextBox x:Name="TokenTextBox" Width="200" Style="{StaticResource DarkTextBox}" Margin="0,0,0,0" HorizontalAlignment="Left" ToolTip="Token это уникальный ключ, который используется для запуска Вашего бота. Чтобы его получить, напишите боту @BotFather"/>
-                    <Button Name="RunBotButton" Margin="10 0 0 0" Content="Запустить бота" Background="#31314d" Foreground="White" Padding="5 2" BorderThickness="0" Width="125" Click="RunBotButton_Click"/>
+                    <Button Name="RunBotButton" Margin="10 0 0 0" Content="Запустить бота" Background="#31314d" Foreground="White" BorderThickness="0" Width="200" Click="RunBotButton_Click"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Button Name="AddNewTelegramCommandButton" Content="Добавить команду" Background="#31314d" Width="200" HorizontalAlignment="Left" Margin="5" Padding="3" Click="AddNewTelegramCommandButton_Click"/>

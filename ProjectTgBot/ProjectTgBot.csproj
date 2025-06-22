@@ -9,8 +9,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\Iconka.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="ClosedXML" Version="0.105.0" />
     <PackageReference Include="Telegram.Bot" Version="22.5.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\Iconka.ico" />
   </ItemGroup>
 
 </Project>
